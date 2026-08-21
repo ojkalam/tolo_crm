@@ -90,5 +90,10 @@ class DatabaseSeeder extends Seeder
             ]
         );
         $salesRep->assignRole('SalesRepresentative');
+
+        // 5. Seed Realistic Demo CRM Data (Companies, Contacts, Pipelines, Deals, Scored Leads, Activities, Audits)
+        $this->call([
+            DemoDataSeeder::class,
+        ]);
     }
 }
