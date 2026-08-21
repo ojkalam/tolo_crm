@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\ActivityController;
+use App\Http\Controllers\Api\V1\AnalyticsDashboardController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\ContactController;
@@ -55,5 +56,12 @@ Route::prefix('v1')->group(function () {
 
         // Global Full-Text Search
         Route::get('search', [GlobalSearchController::class, 'search']);
+
+        // Analytics & Reports
+        Route::prefix('analytics')->group(function () {
+            Route::get('dashboard', [AnalyticsDashboardController::class, 'dashboard']);
+            Route::get('pipeline-forecast', [AnalyticsDashboardController::class, 'pipelineForecast']);
+            Route::get('rep-performance', [AnalyticsDashboardController::class, 'repPerformance']);
+        });
     });
 });
