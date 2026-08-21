@@ -11,6 +11,11 @@ Route::get('/login', [WebAuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [WebAuthController::class, 'login'])->name('login.post');
 Route::post('/register', [WebAuthController::class, 'register'])->name('register.post');
 
+// Interactive Visual Testing Report Dashboard
+Route::get('/visual-report', function () {
+    return view('visual-report');
+})->name('visual.report');
+
 // Role Switcher for instant UI role testing
 Route::post('/switch-role', [WebAuthController::class, 'switchRole'])->name('switch.role');
 
