@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tolo CRM — Enterprise Dashboard & Sales Platform</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Tolo CRM — Enterprise Sales & Management Platform</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -147,11 +148,17 @@
         .user-pill {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-subtle);
             padding: 10px 12px;
             border-radius: 12px;
+        }
+
+        .user-info-flex {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .user-avatar-mini {
@@ -177,6 +184,22 @@
             color: var(--accent-cyan);
         }
 
+        .btn-logout {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+
+        .btn-logout:hover {
+            color: var(--accent-rose);
+        }
+
         /* Main Content Area */
         main {
             display: flex;
@@ -187,7 +210,7 @@
 
         /* Top Header */
         .top-nav {
-            padding: 16px 32px;
+            padding: 14px 32px;
             border-bottom: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
@@ -200,7 +223,7 @@
         }
 
         .page-heading {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
@@ -208,7 +231,49 @@
         .top-right {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
+        }
+
+        /* Role Switcher Toolbar */
+        .role-switch-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 4px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .role-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-dim);
+            padding-left: 6px;
+            text-transform: uppercase;
+        }
+
+        .role-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .role-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+
+        .role-btn.active {
+            background: rgba(99, 102, 241, 0.25);
+            border-color: rgba(99, 102, 241, 0.4);
+            color: #C7D2FE;
         }
 
         .search-box-top {
@@ -219,7 +284,7 @@
             border: 1px solid var(--border-subtle);
             padding: 8px 14px;
             border-radius: 10px;
-            width: 280px;
+            width: 240px;
         }
 
         .search-box-top input {
@@ -233,6 +298,27 @@
 
         .search-box-top input::placeholder {
             color: var(--text-dim);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366F1, #4F46E5);
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(99, 102, 241, 0.4);
         }
 
         .content-body {
@@ -614,9 +700,80 @@
         .icon-task { background: rgba(245, 158, 11, 0.15); color: #FCD34D; }
         .icon-note { background: rgba(16, 185, 129, 0.15); color: #6EE7B7; }
         .icon-audit { background: rgba(168, 85, 247, 0.15); color: #D8B4FE; }
+
+        /* Modal Backdrop */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #111827;
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 28px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+        }
     </style>
 </head>
 <body>
+
+    @php
+        $user = Auth::user();
+        $org = $user?->organization;
+        $currentRole = $user?->getRoleNames()->first() ?? 'OrgAdmin';
+        $sanctumToken = $user?->tokens()->latest()->first()?->token ?? 'web-session-token';
+    @endphp
 
     <div class="app-layout">
         <!-- Sidebar Navigation -->
@@ -675,11 +832,19 @@
 
             <div class="sidebar-footer">
                 <div class="user-pill">
-                    <div class="user-avatar-mini" id="sidebarAvatar">J</div>
-                    <div class="user-text-mini">
-                        <h5 id="sidebarName">John Manager</h5>
-                        <p id="sidebarOrg">Acme Corporation</p>
+                    <div class="user-info-flex">
+                        <div class="user-avatar-mini">{{ substr($user?->first_name ?? 'U', 0, 1) }}</div>
+                        <div class="user-text-mini">
+                            <h5>{{ $user?->name ?? 'User' }}</h5>
+                            <p>{{ $org?->name ?? 'Enterprise Tenant' }}</p>
+                        </div>
                     </div>
+                    <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn-logout" title="Sign Out">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        </button>
+                    </form>
                 </div>
             </div>
         </aside>
@@ -691,11 +856,24 @@
                 <h2 class="page-heading" id="viewTitle">Executive Dashboard</h2>
 
                 <div class="top-right">
+                    <!-- Instant Role Switcher Toolbar -->
+                    <div class="role-switch-wrap">
+                        <span class="role-label">Role:</span>
+                        <button type="button" class="role-btn {{ $currentRole === 'SuperAdmin' ? 'active' : '' }}" onclick="switchRole('SuperAdmin')">Super</button>
+                        <button type="button" class="role-btn {{ $currentRole === 'OrgAdmin' ? 'active' : '' }}" onclick="switchRole('OrgAdmin')">OrgAdmin</button>
+                        <button type="button" class="role-btn {{ $currentRole === 'SalesManager' ? 'active' : '' }}" onclick="switchRole('SalesManager')">Mgr</button>
+                        <button type="button" class="role-btn {{ $currentRole === 'SalesRepresentative' ? 'active' : '' }}" onclick="switchRole('SalesRepresentative')">Rep</button>
+                    </div>
+
                     <div class="search-box-top">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         <input type="text" id="topSearchInput" placeholder="Instant Search (Press /)..." onkeyup="if(event.key==='Enter') executeQuickSearch()">
                     </div>
-                    <a href="/" style="font-size: 13px; color: var(--text-muted); text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.04); border-radius: 8px;">Landing Page &rarr;</a>
+
+                    <button type="button" class="btn-primary" onclick="openNewDealModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>New Deal</span>
+                    </button>
                 </div>
             </div>
 
@@ -807,6 +985,10 @@
 
                 <!-- 3. VIEW: LEADS & AI SCORING -->
                 <div class="app-view" id="view-leads">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h3 style="font-size:16px; font-weight:700;">Incoming Leads & AI Scoring Engine</h3>
+                        <button type="button" class="btn-action" onclick="openNewLeadModal()">+ Add New Lead</button>
+                    </div>
                     <div class="leads-table-wrap">
                         <table class="leads-table">
                             <thead>
@@ -829,6 +1011,10 @@
 
                 <!-- 4. VIEW: COMPANIES & ACCOUNTS -->
                 <div class="app-view" id="view-companies">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h3 style="font-size:16px; font-weight:700;">Enterprise Accounts</h3>
+                        <button type="button" class="btn-action" onclick="openNewCompanyModal()">+ Add Company</button>
+                    </div>
                     <div class="search-results-grid" id="companiesGrid">
                         <!-- Populated by JS -->
                     </div>
@@ -836,6 +1022,10 @@
 
                 <!-- 5. VIEW: CONTACTS -->
                 <div class="app-view" id="view-contacts">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h3 style="font-size:16px; font-weight:700;">Key Executive Contacts</h3>
+                        <button type="button" class="btn-action" onclick="openNewContactModal()">+ Add Contact</button>
+                    </div>
                     <div class="leads-table-wrap">
                         <table class="leads-table">
                             <thead>
@@ -876,8 +1066,77 @@
         </main>
     </div>
 
+    <!-- Modal: New Deal -->
+    <div class="modal-backdrop" id="newDealModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-size:18px; font-weight:800;">Create Enterprise Deal</h3>
+                <button type="button" onclick="closeModal('newDealModal')" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:18px;">&times;</button>
+            </div>
+            <form id="newDealForm" onsubmit="submitNewDeal(event)">
+                <div class="form-group">
+                    <label class="form-label">Deal Title</label>
+                    <input type="text" id="dealName" class="form-input" placeholder="e.g. Acme Quantum Cloud Migration" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Deal Amount ($ USD)</label>
+                    <input type="number" id="dealAmount" class="form-input" placeholder="150000" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Associated Company</label>
+                    <select id="dealCompanySelect" class="form-input"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pipeline Stage</label>
+                    <select id="dealStageSelect" class="form-input"></select>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                    <button type="button" class="btn-action" onclick="closeModal('newDealModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Deal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: New Lead -->
+    <div class="modal-backdrop" id="newLeadModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-size:18px; font-weight:800;">Add Incoming Lead</h3>
+                <button type="button" onclick="closeModal('newLeadModal')" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:18px;">&times;</button>
+            </div>
+            <form id="newLeadForm" onsubmit="submitNewLead(event)">
+                <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input type="text" id="leadFirstName" class="form-input" placeholder="Arthur" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" id="leadLastName" class="form-input" placeholder="Curry" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Corporate Email</label>
+                    <input type="email" id="leadEmail" class="form-input" placeholder="arthur.curry@atlantistech.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" id="leadCompany" class="form-input" placeholder="Atlantis Oceanographic Tech" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Estimated Value ($)</label>
+                    <input type="number" id="leadEstValue" class="form-input" placeholder="250000">
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                    <button type="button" class="btn-action" onclick="closeModal('newLeadModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Calculate Score & Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Application Script -->
     <script>
+        let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let currentToken = localStorage.getItem('tolo_crm_token') || '1|4YTvZHghiWq6uiw0GNEkbf6eIMe0wLG7WQlbOLnuf2f445df';
 
         function showView(viewName) {
@@ -885,9 +1144,10 @@
             document.querySelectorAll('.nav-item-btn').forEach(el => el.classList.remove('active'));
 
             const targetView = document.getElementById('view-' + viewName);
-            if (targetView) {
-                targetView.classList.add('active');
-            }
+            if (targetView) targetView.classList.add('active');
+
+            const targetBtn = document.getElementById('nav' + viewName.charAt(0).toUpperCase() + viewName.slice(1));
+            if (targetBtn) targetBtn.classList.add('active');
 
             const titleMap = {
                 'dashboard': 'Executive Sales & Revenue Dashboard',
@@ -912,6 +1172,7 @@
         async function apiFetch(endpoint, options = {}) {
             const headers = {
                 'Authorization': 'Bearer ' + currentToken,
+                'X-CSRF-TOKEN': csrfToken,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 ...options.headers
@@ -919,6 +1180,29 @@
 
             const res = await fetch(endpoint, { ...options, headers });
             return await res.json();
+        }
+
+        // Fast Role Switcher
+        async function switchRole(role) {
+            try {
+                const res = await fetch('/switch-role', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ role })
+                });
+                const data = await res.json();
+                if (data.token) {
+                    currentToken = data.token;
+                    localStorage.setItem('tolo_crm_token', data.token);
+                }
+                window.location.reload();
+            } catch (err) {
+                console.error(err);
+            }
         }
 
         // 1. Load Kanban Board
@@ -950,7 +1234,7 @@
                                 <div class="deal-card">
                                     <div class="deal-title">${d.name}</div>
                                     <div class="deal-company">${d.company ? d.company.name : 'Acme Enterprise'}</div>
-                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
                                         <span class="deal-amount">$${Number(d.amount).toLocaleString()}</span>
                                         <span class="status-badge ${d.status === 'won' ? 'status-qualified' : 'status-new'}">${d.status || 'open'}</span>
                                     </div>
@@ -1000,7 +1284,7 @@
                     method: 'POST',
                     body: JSON.stringify({ create_deal: true, deal_amount: 150000 })
                 });
-                alert('Success! Lead converted atomically to Company and Contact.');
+                alert('Success! Lead converted atomically to Company, Contact, and Deal.');
                 loadLeads();
             } catch (err) {
                 alert('Conversion error: ' + err.message);
@@ -1053,7 +1337,7 @@
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td><strong>${c.first_name} ${c.last_name}</strong></td>
-                        <td>${c.company ? c.company.name : 'Stark Industries'}</td>
+                        <td>${c.company ? c.company.name : 'Enterprise Account'}</td>
                         <td>${c.job_title || 'Executive'}</td>
                         <td><span style="color:#38BDF8; font-family:'JetBrains Mono'; font-size:12px;">${c.email || ''}</span></td>
                         <td>${c.phone || '+1 (555) 000-0000'}</td>
@@ -1139,6 +1423,72 @@
             showView('search');
             document.getElementById('mainSearchInput').value = query;
             handleLiveSearch(query);
+        }
+
+        // Modals & New Entity Creation
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+        }
+
+        async function openNewDealModal() {
+            const modal = document.getElementById('newDealModal');
+            const compSelect = document.getElementById('dealCompanySelect');
+            const stageSelect = document.getElementById('dealStageSelect');
+
+            compSelect.innerHTML = '<option>Loading...</option>';
+            stageSelect.innerHTML = '<option>Loading...</option>';
+            modal.classList.add('open');
+
+            const [comps, pipes] = await Promise.all([
+                apiFetch('/api/v1/companies'),
+                apiFetch('/api/v1/pipelines')
+            ]);
+
+            compSelect.innerHTML = comps.data.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            const stages = pipes.data[0].stages;
+            stageSelect.innerHTML = stages.map(s => `<option value="${s.id}">${s.name} (${s.win_probability}%)</option>`).join('');
+        }
+
+        async function submitNewDeal(e) {
+            e.preventDefault();
+            const name = document.getElementById('dealName').value;
+            const amount = document.getElementById('dealAmount').value;
+            const company_id = document.getElementById('dealCompanySelect').value;
+            const stage_id = document.getElementById('dealStageSelect').value;
+
+            const pipes = await apiFetch('/api/v1/pipelines');
+            const pipeline_id = pipes.data[0].id;
+
+            const res = await apiFetch('/api/v1/deals', {
+                method: 'POST',
+                body: JSON.stringify({ name, amount, company_id, stage_id, pipeline_id, currency: 'USD' })
+            });
+
+            closeModal('newDealModal');
+            alert('Deal created successfully!');
+            showView('kanban');
+        }
+
+        function openNewLeadModal() {
+            document.getElementById('newLeadModal').classList.add('open');
+        }
+
+        async function submitNewLead(e) {
+            e.preventDefault();
+            const first_name = document.getElementById('leadFirstName').value;
+            const last_name = document.getElementById('leadLastName').value;
+            const email = document.getElementById('leadEmail').value;
+            const company_name = document.getElementById('leadCompany').value;
+            const estimated_value = document.getElementById('leadEstValue').value;
+
+            const res = await apiFetch('/api/v1/leads', {
+                method: 'POST',
+                body: JSON.stringify({ first_name, last_name, email, company_name, estimated_value, source: 'website', status: 'new' })
+            });
+
+            closeModal('newLeadModal');
+            alert(`Lead added! Computed AI Score: ${res.data.score}/100`);
+            showView('leads');
         }
 
         document.addEventListener('DOMContentLoaded', () => {

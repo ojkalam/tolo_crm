@@ -10,8 +10,17 @@ async function captureAllFeatureScreenshots() {
 
     const artifactDir = '/Users/kalam/.gemini/antigravity-ide/brain/36f4d5cb-83f7-496b-be86-caea71328d2d';
 
+    // 0. Authenticate via Web Login on Landing Page
+    console.log('0. Logging in via web portal...');
+    await page.goto('http://127.0.0.1:8000', { waitUntil: 'networkidle' });
+    await page.click('button:has-text("Org Admin")');
+    await page.waitForTimeout(300);
+    await page.click('#loginSubmitBtn');
+    await page.waitForSelector('#sessionPanel:not([style*="display: none"])', { timeout: 5000 });
+    await page.waitForTimeout(500);
+
     // 1. Executive Dashboard
-    console.log('1. Capturing Executive Sales Dashboard...');
+    console.log('1. Capturing Executive Sales Dashboard at /app ...');
     await page.goto('http://127.0.0.1:8000/app', { waitUntil: 'networkidle' });
     await page.waitForTimeout(600);
     await page.screenshot({ path: `${artifactDir}/01_executive_dashboard.png` });
@@ -60,7 +69,7 @@ async function captureAllFeatureScreenshots() {
     console.log('Saved: 07_global_search_results.png');
 
     await browser.close();
-    console.log('All 7 CRM feature screenshots successfully captured!');
+    console.log('All 7 CRM feature screenshots successfully captured with full web session auth!');
 }
 
 captureAllFeatureScreenshots().catch(err => {

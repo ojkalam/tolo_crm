@@ -905,6 +905,10 @@
                             <div class="token-value" id="sessionToken">...</div>
                         </div>
 
+                        <a href="/app" class="submit-btn" style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; margin-bottom:12px; background:linear-gradient(135deg, #10B981, #059669);">
+                            <span>🚀 Open CRM Application (/app)</span>
+                        </a>
+
                         <div class="quick-actions">
                             <button type="button" class="action-link" onclick="testEndpoint('/api/v1/analytics/dashboard', 'Executive Analytics')">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
@@ -924,7 +928,10 @@
                             </button>
                         </div>
 
-                        <button type="button" class="logout-btn" onclick="handleLogout()">Sign Out</button>
+                        <form method="POST" action="/logout" style="width:100%; margin-top:10px;">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="logout-btn">Sign Out</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1078,14 +1085,16 @@
             const password = document.getElementById('loginPassword').value;
             const btn = document.getElementById('loginSubmitBtn');
             const spinner = document.getElementById('loginSpinner');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             btn.disabled = true;
             spinner.style.display = 'block';
 
             try {
-                const res = await fetch('/api/v1/auth/login', {
+                const res = await fetch('/login', {
                     method: 'POST',
                     headers: {
+                        'X-CSRF-TOKEN': csrfToken,
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                     },
@@ -1101,7 +1110,7 @@
                 localStorage.setItem('tolo_crm_token', data.token);
                 localStorage.setItem('tolo_crm_user', JSON.stringify(data.user));
 
-                showMsg('Login successful! Welcome back.');
+                showMsg('Login successful! Redirecting to CRM dashboard...');
                 setTimeout(() => {
                     renderSession(data.user, data.token);
                 }, 400);
@@ -1124,6 +1133,7 @@
             const email = document.getElementById('regEmail').value.trim();
             const password = document.getElementById('regPassword').value;
             const password_confirmation = document.getElementById('regPasswordConfirm').value;
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             if (password !== password_confirmation) {
                 showMsg('Passwords do not match.', true);
@@ -1137,9 +1147,10 @@
             spinner.style.display = 'block';
 
             try {
-                const res = await fetch('/api/v1/auth/register', {
+                const res = await fetch('/register', {
                     method: 'POST',
                     headers: {
+                        'X-CSRF-TOKEN': csrfToken,
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                     },
