@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\V1\ActivityController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\DealController;
 use App\Http\Controllers\Api\V1\LeadController;
 use App\Http\Controllers\Api\V1\PipelineController;
+use App\Http\Controllers\Api\V1\TimelineController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -42,5 +44,12 @@ Route::prefix('v1')->group(function () {
         // Deals & Stage Transitions
         Route::post('deals/{deal}/move-stage', [DealController::class, 'moveStage']);
         Route::apiResource('deals', DealController::class);
+
+        // Activities & Tasks
+        Route::post('activities/{activity}/complete', [ActivityController::class, 'complete']);
+        Route::apiResource('activities', ActivityController::class);
+
+        // Unified Timeline Stream
+        Route::get('timeline', [TimelineController::class, 'index']);
     });
 });
