@@ -1,0 +1,136 @@
+{
+  "title": "Tolo CRM — Automated Visual Test Report",
+  "total_scenarios": 14,
+  "passed_scenarios": 14,
+  "failed_scenarios": 0,
+  "duration_seconds": "16.95",
+  "generated_at": "2026-08-21T22:29:26.859Z",
+  "tests": [
+    {
+      "id": "01_unauthenticated_guard",
+      "filename": "01_unauthenticated_guard.png",
+      "title": "Unauthenticated Security Guard",
+      "description": "Visiting /app without an active session automatically redirects guests to /login.",
+      "category": "Security & Routing",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:11.759Z"
+    },
+    {
+      "id": "02_landing_portal_dark",
+      "filename": "02_landing_portal_dark.png",
+      "title": "Modern Dark Landing Portal",
+      "description": "Glassmorphic dark design with ambient glowing gradient mesh and dual-tab auth portal.",
+      "category": "UI & Design",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:12.927Z"
+    },
+    {
+      "id": "03_login_session_panel",
+      "filename": "03_login_session_panel.png",
+      "title": "Web Session & Sanctum Token Panel",
+      "description": "Authenticates against /login, generates session cookie and active Sanctum token launchpad.",
+      "category": "Authentication",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:14.807Z"
+    },
+    {
+      "id": "04_executive_dashboard",
+      "filename": "04_executive_dashboard.png",
+      "title": "Executive Sales & Revenue Dashboard",
+      "description": "Real-time KPIs ($540k open pipeline, $325k weighted forecast, $645k won revenue), sales funnels, and leaderboard.",
+      "category": "Analytics & KPIs",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:16.121Z"
+    },
+    {
+      "id": "05_pipeline_kanban_board",
+      "filename": "05_pipeline_kanban_board.png",
+      "title": "Interactive 7-Stage Pipeline Kanban Board",
+      "description": "Dynamic pipeline stages with win probabilities (10% to 100%), stage aggregates, and deal cards.",
+      "category": "Pipelines & Deals",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:17.025Z"
+    },
+    {
+      "id": "06_new_deal_modal",
+      "filename": "06_new_deal_modal.png",
+      "title": "Interactive Deal Creation Modal",
+      "description": "Form modal connected to PostgreSQL pipelines, stages, and company associations.",
+      "category": "Deals Management",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:17.700Z"
+    },
+    {
+      "id": "07_kanban_with_new_deal",
+      "filename": "07_kanban_with_new_deal.png",
+      "title": "Kanban Board Real-Time Insertion",
+      "description": "Newly created $350k deal dynamically rendered in the Technical Demo stage column.",
+      "category": "Real-Time Sync",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:18.898Z"
+    },
+    {
+      "id": "08_leads_ai_scoring_view",
+      "filename": "08_leads_ai_scoring_view.png",
+      "title": "Leads Engine & AI Qualification Scoring",
+      "description": "Roster of incoming leads with calculated AI qualification scores (⚡ 100/100, 80/100) and statuses.",
+      "category": "Lead Management",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:19.780Z"
+    },
+    {
+      "id": "09_new_lead_modal_creation",
+      "filename": "09_new_lead_modal_creation.png",
+      "title": "Add Lead Modal & Corporate Domain Scoring",
+      "description": "Captures lead details and computes instant score via LeadScoringService.",
+      "category": "Lead Scoring",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:20.864Z"
+    },
+    {
+      "id": "10_companies_jsonb_accounts",
+      "filename": "10_companies_jsonb_accounts.png",
+      "title": "Enterprise Accounts & PostgreSQL JSONB Attributes",
+      "description": "Enterprise company cards displaying annual revenues and GIN-indexed JSONB schema-less custom attributes.",
+      "category": "Companies & Accounts",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:22.554Z"
+    },
+    {
+      "id": "11_contacts_roster",
+      "filename": "11_contacts_roster.png",
+      "title": "Executive Contacts & Decision Makers",
+      "description": "Roster of key contacts, job titles, communication channels, and account associations.",
+      "category": "Contacts",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:23.447Z"
+    },
+    {
+      "id": "12_activity_timeline_audit",
+      "filename": "12_activity_timeline_audit.png",
+      "title": "Unified Chronological Activity & Audit Stream",
+      "description": "Combines polymorphic CRM activities (meetings, calls, tasks, notes) with Spatie model mutation audits.",
+      "category": "Timeline & Audits",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:24.351Z"
+    },
+    {
+      "id": "13_global_tsvector_search",
+      "filename": "13_global_tsvector_search.png",
+      "title": "PostgreSQL tsvector High-Speed Full-Text Search",
+      "description": "Sub-millisecond ranked multi-entity search returning matched companies, deals, contacts, and leads.",
+      "category": "Full-Text Search",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:25.756Z"
+    },
+    {
+      "id": "14_role_switcher_rep",
+      "filename": "14_role_switcher_rep.png",
+      "title": "Instant Role Impersonation Toolbar",
+      "description": "Header switcher instantly changes active user context and permissions to Sales Representative (Alex Rivers).",
+      "category": "RBAC & Multi-Tenancy",
+      "status": "PASSED",
+      "timestamp": "2026-08-21T22:29:26.838Z"
+    }
+  ]
+}
