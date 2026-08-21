@@ -5,7 +5,9 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\DealController;
 use App\Http\Controllers\Api\V1\LeadController;
+use App\Http\Controllers\Api\V1\PipelineController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -31,5 +33,14 @@ Route::prefix('v1')->group(function () {
 
         Route::post('leads/{lead}/convert', [LeadController::class, 'convert']);
         Route::apiResource('leads', LeadController::class);
+
+        // Pipelines & Kanban Board
+        Route::get('pipelines/{pipeline}/kanban', [PipelineController::class, 'kanban']);
+        Route::post('pipelines/{pipeline}/reorder-stages', [PipelineController::class, 'reorderStages']);
+        Route::apiResource('pipelines', PipelineController::class);
+
+        // Deals & Stage Transitions
+        Route::post('deals/{deal}/move-stage', [DealController::class, 'moveStage']);
+        Route::apiResource('deals', DealController::class);
     });
 });
