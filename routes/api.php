@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\LeadController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -27,5 +28,8 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('companies', CompanyController::class);
         Route::apiResource('contacts', ContactController::class);
+
+        Route::post('leads/{lead}/convert', [LeadController::class, 'convert']);
+        Route::apiResource('leads', LeadController::class);
     });
 });
