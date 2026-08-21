@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\DealController;
+use App\Http\Controllers\Api\V1\GlobalSearchController;
 use App\Http\Controllers\Api\V1\LeadController;
 use App\Http\Controllers\Api\V1\PipelineController;
 use App\Http\Controllers\Api\V1\TimelineController;
@@ -51,5 +52,8 @@ Route::prefix('v1')->group(function () {
 
         // Unified Timeline Stream
         Route::get('timeline', [TimelineController::class, 'index']);
+
+        // Global Full-Text Search
+        Route::get('search', [GlobalSearchController::class, 'search']);
     });
 });
