@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\CompanyController;
+use App\Http\Controllers\Api\V1\ContactController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -19,5 +21,11 @@ Route::prefix('v1')->group(function () {
             Route::put('/profile', [AuthController::class, 'updateProfile']);
             Route::put('/password', [AuthController::class, 'updatePassword']);
         });
+    });
+
+    // Authenticated CRM Endpoints
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::apiResource('companies', CompanyController::class);
+        Route::apiResource('contacts', ContactController::class);
     });
 });
