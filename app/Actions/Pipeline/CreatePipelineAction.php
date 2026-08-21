@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class CreatePipelineAction
 {
     /**
-     * @param array{name: string, is_default?: bool, stages?: list<array{name: string, win_probability: int, order_column?: int, color_code?: string}>} $data
+     * @param  array{name: string, is_default?: bool, stages?: list<array{name: string, win_probability: int, order_column?: int, color_code?: string}>}  $data
      */
     public function execute(Organization $organization, array $data): Pipeline
     {

@@ -7,9 +7,9 @@ namespace App\DTOs;
 class ConvertLeadDTO
 {
     /**
-     * @param array<string, mixed> $companyData
-     * @param array<string, mixed> $contactData
-     * @param array<string, mixed> $dealData
+     * @param  array<string, mixed>  $companyData
+     * @param  array<string, mixed>  $contactData
+     * @param  array<string, mixed>  $dealData
      */
     public function __construct(
         public array $companyData = [],
@@ -19,7 +19,7 @@ class ConvertLeadDTO
     ) {}
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {

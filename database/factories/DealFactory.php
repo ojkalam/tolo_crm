@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Company;
-use App\Models\Contact;
 use App\Models\Deal;
 use App\Models\Organization;
 use App\Models\Pipeline;
@@ -28,7 +26,7 @@ class DealFactory extends Factory
             'company_id' => null,
             'contact_id' => null,
             'assigned_to' => null,
-            'name' => fake()->catchPhrase() . ' Deal',
+            'name' => fake()->catchPhrase().' Deal',
             'amount' => fake()->randomFloat(2, 5000, 250000),
             'currency' => 'USD',
             'expected_close_date' => fake()->dateTimeBetween('+1 week', '+6 months')->format('Y-m-d'),

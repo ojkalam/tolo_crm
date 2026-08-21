@@ -11,7 +11,7 @@ use App\Models\User;
 class CreateCompanyAction
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(Organization $organization, array $data, ?User $creator = null): Company
     {

@@ -28,7 +28,7 @@ class ActivityFactory extends Factory
             'subjectable_type' => Contact::class,
             'subjectable_id' => Contact::factory(),
             'type' => $type,
-            'title' => ucfirst($type->value) . ': ' . fake()->sentence(4),
+            'title' => ucfirst($type->value).': '.fake()->sentence(4),
             'description' => fake()->paragraph(),
             'due_date' => fake()->dateTimeBetween('-1 week', '+2 weeks'),
             'completed_at' => fake()->boolean(40) ? now() : null,

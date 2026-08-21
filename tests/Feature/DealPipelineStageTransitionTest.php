@@ -22,10 +22,15 @@ class DealPipelineStageTransitionTest extends TestCase
     use RefreshDatabase;
 
     protected Organization $org;
+
     protected User $salesRep;
+
     protected Pipeline $pipeline;
+
     protected PipelineStage $stageDiscovery;
+
     protected PipelineStage $stageNegotiation;
+
     protected PipelineStage $stageWon;
 
     protected function setUp(): void

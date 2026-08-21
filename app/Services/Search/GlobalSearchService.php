@@ -93,13 +93,13 @@ class GlobalSearchService
         ", [$query, $orgId, $query, "%{$query}%", "%{$query}%", "%{$query}%", $limit]);
 
         return array_map(function ($row) {
-            $name = trim(($row->first_name ?? '') . ' ' . ($row->last_name ?? ''));
+            $name = trim(($row->first_name ?? '').' '.($row->last_name ?? ''));
 
             return [
                 'id' => (string) $row->id,
                 'entity_type' => 'contact',
                 'title' => $name,
-                'subtitle' => $row->job_title ? ($row->job_title . ($row->email ? " • {$row->email}" : '')) : ($row->email ?? $row->phone ?? ''),
+                'subtitle' => $row->job_title ? ($row->job_title.($row->email ? " • {$row->email}" : '')) : ($row->email ?? $row->phone ?? ''),
                 'email' => $row->email,
                 'phone' => $row->phone,
                 'rank' => (float) ($row->rank ?? 0.1),
@@ -129,7 +129,7 @@ class GlobalSearchService
                 'id' => (string) $row->id,
                 'entity_type' => 'company',
                 'title' => (string) $row->name,
-                'subtitle' => $row->industry ? ($row->industry . ($row->domain ? " • {$row->domain}" : '')) : ($row->domain ?? $row->website ?? ''),
+                'subtitle' => $row->industry ? ($row->industry.($row->domain ? " • {$row->domain}" : '')) : ($row->domain ?? $row->website ?? ''),
                 'domain' => $row->domain,
                 'industry' => $row->industry,
                 'rank' => (float) ($row->rank ?? 0.1),
@@ -155,13 +155,13 @@ class GlobalSearchService
         ", [$query, $orgId, $query, "%{$query}%", "%{$query}%", "%{$query}%", "%{$query}%", $limit]);
 
         return array_map(function ($row) {
-            $name = trim(($row->first_name ?? '') . ' ' . ($row->last_name ?? ''));
+            $name = trim(($row->first_name ?? '').' '.($row->last_name ?? ''));
 
             return [
                 'id' => (string) $row->id,
                 'entity_type' => 'lead',
                 'title' => $name,
-                'subtitle' => $row->company_name ? ($row->company_name . ($row->status ? " • Status: {$row->status}" : '')) : "Status: {$row->status}",
+                'subtitle' => $row->company_name ? ($row->company_name.($row->status ? " • Status: {$row->status}" : '')) : "Status: {$row->status}",
                 'status' => $row->status,
                 'score' => (int) ($row->score ?? 0),
                 'rank' => (float) ($row->rank ?? 0.1),

@@ -6,7 +6,6 @@ namespace Tests\Feature;
 
 use App\Models\Company;
 use App\Models\Contact;
-use App\Models\Deal;
 use App\Models\Lead;
 use App\Models\Organization;
 use App\Models\User;
@@ -19,6 +18,7 @@ class PostgresFullTextSearchTest extends TestCase
     use RefreshDatabase;
 
     protected Organization $org;
+
     protected User $user;
 
     protected function setUp(): void

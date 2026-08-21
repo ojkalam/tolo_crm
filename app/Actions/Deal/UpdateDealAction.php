@@ -9,7 +9,7 @@ use App\Models\Deal;
 class UpdateDealAction
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(Deal $deal, array $data): Deal
     {

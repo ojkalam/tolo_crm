@@ -84,7 +84,7 @@ class AuthController extends Controller
 
         if ($user->status !== 'active') {
             return response()->json([
-                'message' => 'Your account is ' . $user->status . '. Please contact your administrator.',
+                'message' => 'Your account is '.$user->status.'. Please contact your administrator.',
             ], Response::HTTP_FORBIDDEN);
         }
 

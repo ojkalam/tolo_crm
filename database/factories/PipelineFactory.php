@@ -19,7 +19,7 @@ class PipelineFactory extends Factory
     {
         return [
             'organization_id' => Organization::factory(),
-            'name' => fake()->words(2, true) . ' Pipeline',
+            'name' => fake()->words(2, true).' Pipeline',
             'is_default' => false,
         ];
     }

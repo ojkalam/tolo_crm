@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Analytics;
 
 use App\Models\Activity;
-use App\Models\Deal;
-use App\Models\Lead;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -86,7 +84,7 @@ class SalesMetricsService
             $query->where('pipelines.is_default', true);
         }
 
-        $rows = $query->selectRaw("
+        $rows = $query->selectRaw('
             pipeline_stages.id as stage_id,
             pipeline_stages.name as stage_name,
             pipeline_stages.win_probability,
@@ -95,7 +93,7 @@ class SalesMetricsService
             COUNT(deals.id) as deals_count,
             COALESCE(SUM(deals.amount), 0) as total_value,
             COALESCE(SUM(deals.amount * (pipeline_stages.win_probability::numeric / 100.0)), 0) as weighted_value
-        ")
+        ')
             ->groupBy(
                 'pipeline_stages.id',
                 'pipeline_stages.name',

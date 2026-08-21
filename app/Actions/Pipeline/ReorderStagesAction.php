@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class ReorderStagesAction
 {
     /**
-     * @param list<array{id: string, order_column: int}> $stages
+     * @param  list<array{id: string, order_column: int}>  $stages
      */
     public function execute(Pipeline $pipeline, array $stages): Pipeline
     {

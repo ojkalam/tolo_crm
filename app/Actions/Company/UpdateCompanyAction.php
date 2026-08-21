@@ -9,7 +9,7 @@ use App\Models\Company;
 class UpdateCompanyAction
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(Company $company, array $data): Company
     {

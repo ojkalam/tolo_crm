@@ -12,7 +12,6 @@ use App\Models\Activity;
 use App\Models\Contact;
 use App\Models\Lead;
 use App\Models\Organization;
-use App\Models\Pipeline;
 use App\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,6 +24,7 @@ class RealtimeQueuesTest extends TestCase
     use RefreshDatabase;
 
     protected Organization $org;
+
     protected User $user;
 
     protected function setUp(): void

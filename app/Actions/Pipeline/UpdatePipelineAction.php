@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class UpdatePipelineAction
 {
     /**
-     * @param array{name?: string, is_default?: bool} $data
+     * @param  array{name?: string, is_default?: bool}  $data
      */
     public function execute(Pipeline $pipeline, array $data): Pipeline
     {

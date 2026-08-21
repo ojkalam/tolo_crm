@@ -32,6 +32,7 @@ Route::prefix('v1')->group(function () {
 
     // Authenticated CRM Endpoints
     Route::middleware('auth:sanctum')->group(function () {
+        Route::post('contacts/import', [ContactController::class, 'import']);
         Route::apiResource('companies', CompanyController::class);
         Route::apiResource('contacts', ContactController::class);
 
@@ -44,6 +45,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('pipelines', PipelineController::class);
 
         // Deals & Stage Transitions
+        Route::get('deals/export', [DealController::class, 'export']);
         Route::post('deals/{deal}/move-stage', [DealController::class, 'moveStage']);
         Route::apiResource('deals', DealController::class);
 

@@ -16,7 +16,7 @@ class CreateLeadAction
     ) {}
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(Organization $organization, array $data, ?User $creator = null): Lead
     {
