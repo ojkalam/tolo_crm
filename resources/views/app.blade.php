@@ -1134,6 +1134,74 @@
         </div>
     </div>
 
+    <!-- Modal: New Company -->
+    <div class="modal-backdrop" id="newCompanyModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-size:18px; font-weight:800;">Add Enterprise Company</h3>
+                <button type="button" onclick="closeModal('newCompanyModal')" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:18px;">&times;</button>
+            </div>
+            <form id="newCompanyForm" onsubmit="submitNewCompany(event)">
+                <div class="form-group">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" id="compName" class="form-input" placeholder="Oscorp Technologies" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Domain</label>
+                    <input type="text" id="compDomain" class="form-input" placeholder="oscorp.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Industry</label>
+                    <input type="text" id="compIndustry" class="form-input" placeholder="Biotechnology & Robotics">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Annual Revenue ($ USD)</label>
+                    <input type="number" id="compRevenue" class="form-input" placeholder="95000000">
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                    <button type="button" class="btn-action" onclick="closeModal('newCompanyModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Company</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: New Contact -->
+    <div class="modal-backdrop" id="newContactModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-size:18px; font-weight:800;">Add Key Contact</h3>
+                <button type="button" onclick="closeModal('newContactModal')" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:18px;">&times;</button>
+            </div>
+            <form id="newContactForm" onsubmit="submitNewContact(event)">
+                <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input type="text" id="contactFirstName" class="form-input" placeholder="Norman" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" id="contactLastName" class="form-input" placeholder="Osborn" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="contactEmail" class="form-input" placeholder="norman@oscorp.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Job Title</label>
+                    <input type="text" id="contactTitle" class="form-input" placeholder="Chairman & CEO">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <select id="contactCompanySelect" class="form-input"></select>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                    <button type="button" class="btn-action" onclick="closeModal('newContactModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Application Script -->
     <script>
         let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -1489,6 +1557,55 @@
             closeModal('newLeadModal');
             alert(`Lead added! Computed AI Score: ${res.data.score}/100`);
             showView('leads');
+        }
+
+        function openNewCompanyModal() {
+            document.getElementById('newCompanyModal').classList.add('open');
+        }
+
+        async function submitNewCompany(e) {
+            e.preventDefault();
+            const name = document.getElementById('compName').value;
+            const domain = document.getElementById('compDomain').value;
+            const industry = document.getElementById('compIndustry').value;
+            const annual_revenue = document.getElementById('compRevenue').value;
+
+            await apiFetch('/api/v1/companies', {
+                method: 'POST',
+                body: JSON.stringify({ name, domain, industry, annual_revenue })
+            });
+
+            closeModal('newCompanyModal');
+            alert('Company created successfully!');
+            showView('companies');
+        }
+
+        async function openNewContactModal() {
+            const modal = document.getElementById('newContactModal');
+            const compSelect = document.getElementById('contactCompanySelect');
+            compSelect.innerHTML = '<option>Loading...</option>';
+            modal.classList.add('open');
+
+            const comps = await apiFetch('/api/v1/companies');
+            compSelect.innerHTML = comps.data.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        }
+
+        async function submitNewContact(e) {
+            e.preventDefault();
+            const first_name = document.getElementById('contactFirstName').value;
+            const last_name = document.getElementById('contactLastName').value;
+            const email = document.getElementById('contactEmail').value;
+            const job_title = document.getElementById('contactTitle').value;
+            const company_id = document.getElementById('contactCompanySelect').value;
+
+            await apiFetch('/api/v1/contacts', {
+                method: 'POST',
+                body: JSON.stringify({ first_name, last_name, email, job_title, company_id })
+            });
+
+            closeModal('newContactModal');
+            alert('Contact added successfully!');
+            showView('contacts');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
