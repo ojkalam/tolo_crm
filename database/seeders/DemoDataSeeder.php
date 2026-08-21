@@ -300,7 +300,7 @@ class DemoDataSeeder extends Seeder
         }
 
         // 5. Seed Leads with LeadScoringService
-        $scoringService = new LeadScoringService();
+        $scoringService = new LeadScoringService;
         $leadsData = [
             [
                 'first_name' => 'Diana',

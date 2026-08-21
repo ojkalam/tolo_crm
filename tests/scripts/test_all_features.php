@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
-$app = require_once __DIR__ . '/../../bootstrap/app.php';
-$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+$app = require_once __DIR__.'/../../bootstrap/app.php';
+$kernel = $app->make(Kernel::class);
 $kernel->bootstrap();
 
 use App\Models\Company;
@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Services\Analytics\SalesMetricsService;
 use App\Services\Search\GlobalSearchService;
 use App\Services\Timeline\TimelineService;
+use Illuminate\Contracts\Console\Kernel;
 
 echo "========================================================\n";
 echo "       TOLO CRM — END-TO-END FEATURE VERIFICATION       \n";
@@ -28,7 +29,7 @@ $orgId = $user->organization_id;
 echo "1. AUTHENTICATED USER & TENANT CONTEXT:\n";
 echo "   - User: {$user->name} ({$user->email})\n";
 echo "   - Organization: {$user->organization->name} (UUID: {$orgId})\n";
-echo "   - Roles: " . implode(', ', $user->getRoleNames()->toArray()) . "\n\n";
+echo '   - Roles: '.implode(', ', $user->getRoleNames()->toArray())."\n\n";
 
 // 2. COMPANIES
 $companies = Company::where('organization_id', $orgId)->get();
@@ -72,8 +73,8 @@ foreach ($pipeline->stages as $st) {
 echo "\n";
 
 // 6. FULL-TEXT SEARCH (tsvector)
-$searchService = new GlobalSearchService();
-$query = "Stark";
+$searchService = new GlobalSearchService;
+$query = 'Stark';
 $searchRes = $searchService->search($orgId, $query);
 echo "6. POSTGRESQL TSVECTOR FULL-TEXT SEARCH (Query: '{$query}'):\n";
 echo "   - Matches Found: {$searchRes['total_count']}\n";
@@ -83,7 +84,7 @@ foreach ($searchRes['unified'] as $item) {
 echo "\n";
 
 // 7. UNIFIED TIMELINE (Activities + Audits)
-$timelineService = new TimelineService();
+$timelineService = new TimelineService;
 $firstCompany = $companies->first();
 $timeline = $timelineService->getTimeline($orgId, 'company', $firstCompany->id);
 echo "7. UNIFIED TIMELINE STREAM for '{$firstCompany->name}':\n";
@@ -94,18 +95,18 @@ foreach ($timeline->items() as $item) {
 echo "\n";
 
 // 8. SALES ANALYTICS & FORECASTING
-$metricsService = new SalesMetricsService();
+$metricsService = new SalesMetricsService;
 $dashboard = $metricsService->getExecutiveDashboardSummary($orgId, $pipeline->id);
 $kpis = $dashboard['kpis'];
 echo "8. EXECUTIVE REVENUE & FORECASTING ANALYTICS:\n";
-echo "   - Total Pipeline Value: \$" . number_format($kpis['total_pipeline_value'], 2) . "\n";
-echo "   - Weighted Forecast Value: \$" . number_format($kpis['weighted_forecast_value'], 2) . "\n";
+echo '   - Total Pipeline Value: $'.number_format($kpis['total_pipeline_value'], 2)."\n";
+echo '   - Weighted Forecast Value: $'.number_format($kpis['weighted_forecast_value'], 2)."\n";
 echo "   - Open Deals Count: {$kpis['open_deals_count']}\n";
 echo "   - Won Deals Count: {$kpis['won_deals_count']}\n";
 echo "   - Win Rate: {$kpis['win_rate_percentage']}%\n";
 echo "   - Monthly Revenue Trend:\n";
 foreach ($dashboard['monthly_revenue_trend'] as $month) {
-    echo "     * Month {$month['month']}: \$" . number_format($month['revenue'], 2) . " ({$month['deals_count']} won deals)\n";
+    echo "     * Month {$month['month']}: \$".number_format($month['revenue'], 2)." ({$month['deals_count']} won deals)\n";
 }
 echo "\n========================================================\n";
 echo "               ALL FEATURES 100% OPERATIONAL            \n";

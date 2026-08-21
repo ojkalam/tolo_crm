@@ -151,13 +151,14 @@ php artisan migrate --seed
 
 ---
 
-## 🚀 Running the Application
+## 🚀 Running the Application & Interactive UI
 
 ### Start Development Server
 ```bash
 php artisan serve
 ```
-The API will be available at `http://localhost:8000`.
+- **Landing & Authentication Portal**: `http://localhost:8000`
+- **Interactive CRM Web App Dashboard**: `http://localhost:8000/app`
 
 ### Start Redis Queue Worker / Horizon
 ```bash
@@ -174,14 +175,20 @@ php artisan reverb:start
 
 ## 🧪 Running Tests & Quality Checks
 
-Tolo CRM comes with a **100% passing Pest test suite** (28 feature test suites, 146 assertions).
+Tolo CRM comes with a **100% passing Pest test suite** (33 feature test suites, 168 assertions) and automated Playwright visual testing.
 
 ```bash
-# Run all Pest feature and unit tests
+# Run all Pest feature and unit tests (33 tests, 168 assertions)
 php artisan test
 
 # Run tests in parallel
 php artisan test --parallel
+
+# Run end-to-end CRM feature verification script
+php tests/scripts/test_all_features.php
+
+# Run automated 14-step Playwright visual test suite
+node tests/visual/test_full_suite_visually.js
 
 # Run Laravel Pint code style fixer
 vendor/bin/pint --test

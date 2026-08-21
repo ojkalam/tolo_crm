@@ -16,6 +16,7 @@ class WebAuthenticationTest extends TestCase
     use RefreshDatabase;
 
     protected Organization $org;
+
     protected User $adminUser;
 
     protected function setUp(): void
