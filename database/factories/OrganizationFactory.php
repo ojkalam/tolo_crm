@@ -21,7 +21,7 @@ class OrganizationFactory extends Factory
 
         return [
             'name' => $name,
-            'domain' => Str::slug($name) . '-' . Str::random(5) . '.example.com',
+            'domain' => Str::slug($name).'-'.Str::random(5).'.example.com',
             'settings' => [
                 'currency' => 'USD',
                 'timezone' => 'UTC',

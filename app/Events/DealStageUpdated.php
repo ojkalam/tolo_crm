@@ -27,8 +27,8 @@ class DealStageUpdated implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('pipeline.' . $this->deal->pipeline_id),
-            new PrivateChannel('organization.' . $this->deal->organization_id),
+            new PresenceChannel('pipeline.'.$this->deal->pipeline_id),
+            new PrivateChannel('organization.'.$this->deal->organization_id),
         ];
     }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -31,7 +30,7 @@ class ContactFactory extends Factory
             'department' => fake()->randomElement(['Sales', 'Engineering', 'Marketing', 'Executive', 'Operations']),
             'lifecycle_stage' => fake()->randomElement(['lead', 'prospect', 'customer', 'churned', 'other']),
             'custom_attributes' => [
-                'linkedin_url' => 'https://linkedin.com/in/' . fake()->userName(),
+                'linkedin_url' => 'https://linkedin.com/in/'.fake()->userName(),
                 'preferred_contact_method' => fake()->randomElement(['email', 'phone', 'sms']),
             ],
         ];

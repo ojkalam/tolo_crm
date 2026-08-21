@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Enums\ActivityType;
 use App\Enums\LeadStatus;
 use App\Models\Activity;
 use App\Models\Deal;
@@ -22,6 +21,7 @@ class AnalyticsMetricsTest extends TestCase
     use RefreshDatabase;
 
     protected Organization $org;
+
     protected User $manager;
 
     protected function setUp(): void

@@ -9,7 +9,7 @@ use App\Models\Lead;
 class UpdateLeadAction
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(Lead $lead, array $data): Lead
     {

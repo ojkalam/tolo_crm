@@ -8,10 +8,7 @@ use App\Enums\ActivityType;
 use App\Models\Activity;
 use App\Models\Company;
 use App\Models\Contact;
-use App\Models\Deal;
 use App\Models\Organization;
-use App\Models\Pipeline;
-use App\Models\PipelineStage;
 use App\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,6 +19,7 @@ class ActivityTimelineTest extends TestCase
     use RefreshDatabase;
 
     protected Organization $org;
+
     protected User $user;
 
     protected function setUp(): void

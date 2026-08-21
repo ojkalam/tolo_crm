@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Deal;
 use App\Models\Lead;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -61,14 +62,14 @@ class TimelineService
             ->with('causer')
             ->get()
             ->map(function (SpatieActivity $log) {
-                /** @var \App\Models\User|null $causer */
+                /** @var User|null $causer */
                 $causer = $log->causer;
 
                 return [
                     'id' => (string) $log->id,
                     'category' => 'audit',
-                    'type' => 'model_' . ($log->event ?? 'updated'),
-                    'title' => ucfirst($log->event ?? 'updated') . ' ' . class_basename((string) $log->subject_type),
+                    'type' => 'model_'.($log->event ?? 'updated'),
+                    'title' => ucfirst($log->event ?? 'updated').' '.class_basename((string) $log->subject_type),
                     'description' => $log->description,
                     'is_completed' => true,
                     'due_date' => null,

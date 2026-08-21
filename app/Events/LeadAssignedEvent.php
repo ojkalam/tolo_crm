@@ -25,8 +25,8 @@ class LeadAssignedEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('user.' . $this->assignedUser->id),
-            new PrivateChannel('organization.' . $this->lead->organization_id),
+            new PrivateChannel('user.'.$this->assignedUser->id),
+            new PrivateChannel('organization.'.$this->lead->organization_id),
         ];
     }
 

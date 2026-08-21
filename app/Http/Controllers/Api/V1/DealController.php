@@ -8,6 +8,7 @@ use App\Actions\Deal\CreateDealAction;
 use App\Actions\Deal\DeleteDealAction;
 use App\Actions\Deal\MoveDealStageAction;
 use App\Actions\Deal\UpdateDealAction;
+use App\Exports\DealsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Deal\MoveStageRequest;
 use App\Http\Requests\Deal\StoreDealRequest;
@@ -17,8 +18,10 @@ use App\Models\Deal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class DealController extends Controller
@@ -117,5 +120,15 @@ class DealController extends Controller
             'message' => 'Deal moved to new stage successfully',
             'data' => new DealResource($updatedDeal),
         ]);
+    }
+
+    public function export(Request $request): BinaryFileResponse
+    {
+        abort_if(! $request->user()->can('reports.export'), Response::HTTP_FORBIDDEN);
+
+        $orgId = $request->user()->organization_id;
+        $filename = 'deals_export_'.now()->format('Y_m_d_His').'.csv';
+
+        return Excel::download(new DealsExport($orgId), $filename);
     }
 }

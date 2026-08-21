@@ -9,7 +9,7 @@ use App\Models\Contact;
 class UpdateContactAction
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(Contact $contact, array $data): Contact
     {

@@ -26,7 +26,7 @@ class ConvertLeadAction
             $orgId = $lead->organization_id;
 
             // 1. Create or Find Company
-            $companyName = $dto->companyData['name'] ?? $lead->company_name ?? ($lead->last_name . ' Household');
+            $companyName = $dto->companyData['name'] ?? $lead->company_name ?? ($lead->last_name.' Household');
             $company = Company::firstOrCreate(
                 [
                     'organization_id' => $orgId,
@@ -94,7 +94,7 @@ class ConvertLeadAction
                     'company_id' => $company->id,
                     'contact_id' => $contact->id,
                     'assigned_to' => $lead->assigned_user_id ?? $actor?->id,
-                    'name' => $dto->dealData['name'] ?? ($company->name . ' - Initial Deal'),
+                    'name' => $dto->dealData['name'] ?? ($company->name.' - Initial Deal'),
                     'amount' => $dto->dealData['amount'] ?? $lead->estimated_value ?? 0,
                     'currency' => $dto->dealData['currency'] ?? 'USD',
                     'expected_close_date' => $dto->dealData['expected_close_date'] ?? now()->addDays(30),

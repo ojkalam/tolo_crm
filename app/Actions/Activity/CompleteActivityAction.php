@@ -9,7 +9,7 @@ use App\Models\Activity;
 class CompleteActivityAction
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(Activity $activity, array $data = []): Activity
     {

@@ -11,10 +11,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Contact\StoreContactRequest;
 use App\Http\Requests\Contact\UpdateContactRequest;
 use App\Http\Resources\ContactResource;
+use App\Imports\ContactsImport;
 use App\Models\Contact;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
@@ -97,6 +99,25 @@ class ContactController extends Controller
 
         return response()->json([
             'message' => 'Contact deleted successfully',
+        ]);
+    }
+
+    public function import(Request $request): JsonResponse
+    {
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:csv,txt,xlsx,xls'],
+        ]);
+
+        abort_if(! $request->user()->can('contacts.create'), Response::HTTP_FORBIDDEN);
+
+        $file = $request->file('file');
+        Excel::import(
+            new ContactsImport($request->user()->organization, $request->user()),
+            $file
+        );
+
+        return response()->json([
+            'message' => 'Contacts imported successfully',
         ]);
     }
 }

@@ -11,7 +11,7 @@ use App\Models\User;
 class LogActivityAction
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(Organization $organization, array $data, ?User $creator = null): Activity
     {

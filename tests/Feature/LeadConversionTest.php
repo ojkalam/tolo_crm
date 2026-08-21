@@ -20,6 +20,7 @@ class LeadConversionTest extends TestCase
     use RefreshDatabase;
 
     protected Organization $org;
+
     protected User $salesManager;
 
     protected function setUp(): void
